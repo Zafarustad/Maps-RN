@@ -32,7 +32,7 @@ const Home = ({navigation}) => {
         setError('Cannot be empty');
       } else {
         const res = await axios.get(
-          `https://maps.googleapis.com/maps/api/geocode/json?address=${input}&key=AIzaSyAu_ntAHBQh0xjvwKWvDGhgJWdfWdbeAJA`,
+          `https://maps.googleapis.com/maps/api/geocode/json?address=${input}&key=${API_KEY}`,
         );
         let newLocation = {
           name: input,
@@ -49,12 +49,10 @@ const Home = ({navigation}) => {
     }
   };
 
-  console.log('er', error);
-
   const deleteItem = (id) => {
-    console.log('hxfchh');
     setLocations(locations.filter((location) => location.id !== id));
   };
+
   return (
     <View style={{flex: 1}}>
       <View style={styles.searchCont}>
