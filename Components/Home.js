@@ -10,6 +10,8 @@ import {
   Image,
 } from 'react-native';
 import axios from 'axios';
+import config from '../config';
+import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import Icon from 'react-native-vector-icons/Ionicons';
 import DeleteIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -32,7 +34,7 @@ const Home = ({navigation}) => {
         setError('Cannot be empty');
       } else {
         const res = await axios.get(
-          `https://maps.googleapis.com/maps/api/geocode/json?address=${input}&key=${API_KEY}`,
+          `https://maps.googleapis.com/maps/api/geocode/json?address=${input}&key=${config.GOOGLE_API_KEY}`,
         );
         let newLocation = {
           name: input,
@@ -85,7 +87,7 @@ const Home = ({navigation}) => {
                 data: locations,
               })
             }>
-            <Text>See On Map</Text>
+            <Text>Open Map</Text>
             <Icon
               name="ios-map"
               size={20}
