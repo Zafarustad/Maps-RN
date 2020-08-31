@@ -10,8 +10,8 @@ import {
   Image,
 } from 'react-native';
 import axios from 'axios';
+import SearchBar from './SearchBar';
 import config from '../config';
-import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import Icon from 'react-native-vector-icons/Ionicons';
 import DeleteIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -46,7 +46,7 @@ const Home = ({navigation}) => {
       }
       setInput('');
     } catch (error) {
-      setError('Somthing went Wrong');
+      setError('Location not found');
       console.log(error);
     }
   };
@@ -57,27 +57,12 @@ const Home = ({navigation}) => {
 
   return (
     <View style={{flex: 1}}>
-      <View style={styles.searchCont}>
-        <TextInput
-          placeholder="Type a Location. Eg: Mumbai"
-          value={input}
-          onChangeText={(text) => setInput(text)}
-          style={styles.searchBar}
-        />
-        <Pressable style={styles.button} onPress={() => getResult()}>
-          <Icon
-            style={{alignSelf: 'center'}}
-            name="ios-add"
-            size={40}
-            color="#1E1E1E"
-          />
-        </Pressable>
-      </View>
-      {error && (
-        <Text style={{textAlign: 'center', fontSize: 15, color: 'red'}}>
-          {error}
-        </Text>
-      )}
+      <SearchBar
+        input={input}
+        setInput={setInput}
+        error={error}
+        getResult={getResult}
+      />
       {locations.length > 0 ? (
         <>
           <Pressable
@@ -132,24 +117,6 @@ const Home = ({navigation}) => {
 export default Home;
 
 const styles = StyleSheet.create({
-  searchCont: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    margin: 20,
-  },
-  searchBar: {
-    borderBottomColor: '#1E1E1E',
-    borderBottomWidth: 1,
-    backgroundColor: '#dee3e3',
-    padding: 10,
-    borderTopLeftRadius: 15,
-    borderBottomRightRadius: 15,
-    width: width * 0.83,
-  },
-  button: {
-    alignItems: 'center',
-    marginLeft: 5,
-  },
   item: {
     marginBottom: 25,
     borderRadius: 5,
