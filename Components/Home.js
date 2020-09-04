@@ -8,12 +8,14 @@ import {
   Dimensions,
   Pressable,
   Image,
+  Button,
 } from 'react-native';
 import axios from 'axios';
 import SearchBar from './SearchBar';
 import config from '../config';
 import Icon from 'react-native-vector-icons/Ionicons';
 import DeleteIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import NeuMorph from './NeuMorph';
 
 const width = Dimensions.get('screen').width;
 
@@ -56,29 +58,43 @@ const Home = ({navigation}) => {
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: '#DEE9FD', alignItems: 'center'}}>
       <SearchBar
         input={input}
         setInput={setInput}
         error={error}
         getResult={getResult}
       />
+      <Pressable
+        onPress={() => navigation.navigate('Player')}
+        style={{alignSelf: 'center'}}>
+        <NeuMorph width={90} height={40} borderRadius={50} center>
+          <Text>Player</Text>
+        </NeuMorph>
+      </Pressable>
       {locations.length > 0 ? (
         <>
           <Pressable
-            style={styles.navigateBtn}
+            style={{marginVertical: 10, alignSelf: 'flex-end', marginEnd: 28}}
             onPress={() =>
               navigation.navigate('Map', {
                 data: locations,
               })
             }>
-            <Text>Open Map</Text>
-            <Icon
-              name="ios-map"
-              size={20}
-              color="#1E1E1E"
-              style={{marginLeft: 10}}
-            />
+            <NeuMorph
+              width={135}
+              center
+              height={50}
+              borderRadius={50}
+              style={styles.navigateBtn}>
+              <Text>Open Map</Text>
+              <Icon
+                name="ios-map"
+                size={20}
+                color="#1E1E1E"
+                style={{marginLeft: 10}}
+              />
+            </NeuMorph>
           </Pressable>
           <FlatList
             data={locations}
@@ -86,16 +102,20 @@ const Home = ({navigation}) => {
             renderItem={({item}) => (
               <>
                 <View style={styles.item}>
-                  <DeleteIcon
-                    name="delete"
-                    size={20}
-                    color="red"
-                    style={styles.deleteIcon}
-                    onPress={() => deleteItem(item.id)}
-                  />
-                  <Text style={styles.itemText}>Location: {item.name}</Text>
-                  <Text style={styles.itemText}>Latitude: {item.lat}</Text>
-                  <Text style={styles.itemText}>Longitude: {item.lng}</Text>
+                  <NeuMorph width={width * 0.8} height={130} borderRadius={10}>
+                    <DeleteIcon
+                      name="delete"
+                      size={20}
+                      color="red"
+                      style={styles.deleteIcon}
+                      onPress={() => deleteItem(item.id)}
+                    />
+                    <View style={{marginLeft: 15, marginTop: 10}}>
+                      <Text style={styles.itemText}>Location: {item.name}</Text>
+                      <Text style={styles.itemText}>Latitude: {item.lat}</Text>
+                      <Text style={styles.itemText}>Longitude: {item.lng}</Text>
+                    </View>
+                  </NeuMorph>
                 </View>
               </>
             )}
@@ -118,27 +138,17 @@ export default Home;
 
 const styles = StyleSheet.create({
   item: {
-    marginBottom: 25,
+    marginVertical: 10,
     borderRadius: 5,
     padding: 10,
     alignSelf: 'center',
     borderBottomColor: '#1E1E1E',
-    borderBottomWidth: 5,
-    backgroundColor: '#dee3e3',
-    width: width * 0.9,
   },
   navigateBtn: {
     flexDirection: 'row',
     alignItems: 'center',
-    alignSelf: 'flex-end',
-    marginRight: 28,
     justifyContent: 'center',
     padding: 10,
-    borderTopLeftRadius: 15,
-    borderBottomRightRadius: 15,
-    marginBottom: 20,
-    borderColor: '#000',
-    borderWidth: 0.5,
   },
   itemText: {
     fontSize: 16,
@@ -146,7 +156,7 @@ const styles = StyleSheet.create({
   },
   deleteIcon: {
     position: 'absolute',
-    right: 12,
+    right: 20,
     top: 20,
     zIndex: 1,
   },

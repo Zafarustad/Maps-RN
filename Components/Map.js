@@ -18,8 +18,8 @@ const Map = ({route}) => {
       {
         latitude: data[index].lat,
         longitude: data[index].lng,
-        latitudeDelta: 0.1,
-        longitudeDelta: 0.1,
+        latitudeDelta: 0.2,
+        longitudeDelta: 0.2,
       },
       2000,
     );
